@@ -27,12 +27,16 @@ resource "aws_lambda_function" "test_lambda" {
   }
 }
 
-# Erlaube getriggert zu werdden vom S3 Bucket
+################################################
 
-resource "aws_lambda_permission" "test" {
-  statement_id  = "AllowS3Invoke"
+
+resource "aws_lambda_permission" "lambda_permission" {
+  statement_id  = "AllowMyDemoAPIInvoke"
   action        = "lambda:InvokeFunction"
   function_name = aws_lambda_function.test_lambda.function_name
-  principal     = "s3.amazonaws.com"
-  source_arn    = "arn:aws:s3:::${aws_s3_bucket.example.id}"
+  principal     = "apigateway.amazonaws.com"
+
+  # The /* part allows invocation from any stage, method and resource path
+  # within API Gateway.
+  source_arn = "${aws_apigatewayv2_api.tf-api.execution_arn}/*"
 }
