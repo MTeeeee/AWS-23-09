@@ -14,9 +14,17 @@ provider "aws" {
   shared_credentials_files = ["credentials.txt"]
 }
 
-
 module "create_vpc" {
   source = "./modules/vpc"
-  project_name = var.project_name
+  project_name = "${var.env}-${var.project_name}"
+  vpc_cidr = var.vpc_cidr
+  subnet_cidr = var.subnet_cidr
 }
 
+module "create_ec2" {
+  source = "./modules/ec2"
+  project_name = var.project_name
+  ami = var.ami
+  instance_type = var.instance_type
+  subnet_id = module.create_vpc.subnet_id
+}
