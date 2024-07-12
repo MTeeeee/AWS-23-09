@@ -28,4 +28,5 @@ module "create_ec2" {
   instance_type = var.instance_type
   subnet_id = module.create_vpc.subnet_id
   vpc_id = module.create_vpc.vpc_id
+  key_name = aws_key_pair.deployer.id
 }
