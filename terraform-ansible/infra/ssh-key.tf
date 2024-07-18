@@ -12,6 +12,6 @@ resource "aws_key_pair" "deployer" {
 }
 
 resource "local_file" "tf-key" {
-  filename = "./keys/tf-key.pem"
+  filename = "../ansible/tf-key.pem"
   content = tls_private_key.rsa-4096-example.private_key_pem
 }
