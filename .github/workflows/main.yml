@@ -3,7 +3,7 @@ name: terraform ansible CI
 on: 
   push:
     paths: 
-    - 'terraform ansible'
+    - 'terraform-ansible'
 
 jobs:
   build:
